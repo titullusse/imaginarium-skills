@@ -34,8 +34,16 @@ public class XpListener implements Listener {
         }
         String key = event.getEntity().getType().name();
         long xp = plugin.getConfig().getLong("xp-sources.kills." + key, -1);
-        if (xp < 0 && event.getEntity() instanceof Monster) {
-            xp = plugin.getConfig().getLong("xp-sources.kills.defaut", 0);
+        if (xp < 0) {
+            // Non liste explicitement : on applique un defaut selon le type de mob.
+            // Ainsi TOUS les mobs du jeu rapportent de l'XP.
+            long defautHostile = plugin.getConfig().getLong("xp-sources.kills.defaut", 0);
+            if (event.getEntity() instanceof Monster) {
+                xp = defautHostile;
+            } else {
+                // Creatures passives / neutres : defaut dedie, sinon le defaut hostile.
+                xp = plugin.getConfig().getLong("xp-sources.kills.defaut-passif", defautHostile);
+            }
         }
         if (xp > 0) {
             levelManager.addXp(killer, xp);

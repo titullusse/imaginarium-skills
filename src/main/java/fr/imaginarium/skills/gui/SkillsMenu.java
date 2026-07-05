@@ -49,7 +49,7 @@ public final class SkillsMenu {
             inventory.setItem(i, filler);
         }
 
-        inventory.setItem(INFO_SLOT, buildInfoItem(player, profile, levelManager));
+        inventory.setItem(INFO_SLOT, buildInfoItem(player, profile, skillManager, levelManager));
 
         for (Skill skill : skillManager.getSkills()) {
             if (skill.slot() >= 0 && skill.slot() < SIZE) {
@@ -60,7 +60,8 @@ public final class SkillsMenu {
         inventory.setItem(CLOSE_SLOT, item(Material.BARRIER, Msg.color("&cFermer"), List.of()));
     }
 
-    private static ItemStack buildInfoItem(Player player, PlayerProfile profile, LevelManager levelManager) {
+    private static ItemStack buildInfoItem(Player player, PlayerProfile profile,
+                                           SkillManager skillManager, LevelManager levelManager) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta meta = (SkullMeta) head.getItemMeta();
         if (meta != null) {
@@ -76,6 +77,23 @@ public final class SkillsMenu {
                 lore.add(Msg.color("&6Niveau maximum atteint !"));
             }
             lore.add(Msg.color("&7Points de skill : &a" + profile.getSkillPoints()));
+
+            // Liste de toutes les ameliorations de competences du joueur.
+            lore.add("");
+            lore.add(Msg.color("&e&lVos ameliorations :"));
+            boolean hasAny = false;
+            for (Skill skill : skillManager.getSkills()) {
+                int skillLevel = profile.getSkillLevel(skill.id());
+                if (skillLevel > 0) {
+                    lore.add(Msg.color("&8- " + skill.displayName() + " &7: niveau &e"
+                            + skillLevel + "&7/&e" + skill.maxLevel()));
+                    hasAny = true;
+                }
+            }
+            if (!hasAny) {
+                lore.add(Msg.color("&7Aucune amelioration pour l'instant."));
+            }
+
             meta.setLore(lore);
             head.setItemMeta(meta);
         }

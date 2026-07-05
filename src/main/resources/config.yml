@@ -21,11 +21,15 @@ niveaux:
 #  Sources d'XP
 # ------------------------------------------------------------
 xp-sources:
-  # XP gagnee en tuant des creatures.
+  # XP gagnee en tuant des creatures. TOUS les mobs du jeu rapportent de l'XP.
   # Cle = type d'entite (https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/EntityType.html)
-  # "defaut" est utilise pour tout monstre hostile non liste. 0 = desactive.
+  # "defaut"        : XP pour tout monstre HOSTILE non liste ci-dessous.
+  # "defaut-passif" : XP pour toute creature PASSIVE/neutre non listee
+  #                   (animaux, villageois, etc.). Si absent, "defaut" est utilise.
+  # Mettre 0 sur un type precis (ou sur un defaut) pour desactiver son XP.
   kills:
     defaut: 5
+    defaut-passif: 2
     ZOMBIE: 5
     SKELETON: 6
     CREEPER: 8
