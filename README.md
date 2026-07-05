@@ -74,10 +74,10 @@ Placez-le dans le dossier `plugins/` de votre serveur Spigot 1.21.1.
 | `feet` | Bottes |
 | `armor` | Les 4 pièces d'armure |
 
-> ⚠️ Comportement vanilla : dès qu'un objet reçoit un modificateur d'attribut,
-> ses statistiques de base disparaissent. Pour une épée en diamant, pensez à
-> re-ajouter ses dégâts de base (`generic_attack_damage 7` pour l'attaque,
-> `generic_attack_speed -2.4` pour la vitesse).
+> ℹ️ Les statistiques de base de l'objet sont **conservées** : dès le premier
+> `add`, le plugin recopie les attributs vanilla d'origine (dégâts d'une épée,
+> armure d'un plastron...) puis applique votre modificateur par-dessus. Vos
+> ajouts s'additionnent donc aux stats de base au lieu de les effacer.
 
 ## Configuration
 

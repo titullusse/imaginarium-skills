@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -78,8 +79,8 @@ public class ItemAttrCommand implements TabExecutor {
         Msg.send(player, "&b/itemattr clear &7- Retire tous les attributs.");
         Msg.send(player, "&b/itemattr name <nom...> &7- Renomme l'objet (codes &&).");
         Msg.send(player, "&b/itemattr unbreakable &7- Rend l'objet incassable (ou l'inverse).");
-        Msg.send(player, "&c/!\\ Ajouter un attribut remplace les stats de base de l'objet");
-        Msg.send(player, "&c(comportement vanilla) : pensez a re-ajouter les degats de base.");
+        Msg.send(player, "&7Les stats de base de l'objet sont conservees : vos ajouts");
+        Msg.send(player, "&7s'additionnent aux degats/armure vanilla d'origine.");
     }
 
     private void handleAdd(Player player, ItemStack item, ItemMeta meta, String[] args) {
@@ -118,12 +119,34 @@ public class ItemAttrCommand implements TabExecutor {
             }
         }
 
+        // Conserve les statistiques de base de l'objet (degats vanilla d'une epee,
+        // armure d'un plastron...) avant d'ajouter le modificateur personnalise :
+        // sans ca, le vanilla masque les stats de base des qu'un modificateur existe.
+        preserveBaseAttributes(item, meta);
+
         NamespacedKey key = new NamespacedKey(plugin,
                 "item_" + UUID.randomUUID().toString().substring(0, 8));
         meta.addAttributeModifier(attribute, new AttributeModifier(key, amount, operation, slotGroup));
         item.setItemMeta(meta);
         Msg.send(player, "&aAttribut &e" + attribute.name() + " &7(" + operation.name().toLowerCase(Locale.ROOT)
                 + " " + amount + ", " + slotGroup + ") &aajoute a l'objet.");
+        Msg.send(player, "&7Les statistiques de base de l'objet ont ete conservees.");
+    }
+
+    /**
+     * Recopie explicitement les attributs vanilla par defaut de l'objet s'il n'a
+     * pas encore de modificateur personnalise. Ainsi les valeurs de base sont
+     * conservees et seuls les attributs qu'on ajoute ensuite sont modifies.
+     */
+    private void preserveBaseAttributes(ItemStack item, ItemMeta meta) {
+        var existing = meta.getAttributeModifiers();
+        if (existing != null && !existing.isEmpty()) {
+            return; // Deja seede (ou deja personnalise) : on ne touche a rien.
+        }
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            var defaults = item.getType().getDefaultAttributeModifiers(slot);
+            defaults.forEach(meta::addAttributeModifier);
+        }
     }
 
     private void handleRemove(Player player, ItemStack item, ItemMeta meta, String[] args) {
