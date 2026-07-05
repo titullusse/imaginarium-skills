@@ -1,0 +1,114 @@
+# ============================================================
+#  ImaginariumSkills - Definition des skills
+#
+#  Chaque skill modifie un attribut du joueur.
+#  Attributs valides (Spigot 1.21.1) :
+#    GENERIC_MAX_HEALTH, GENERIC_ATTACK_DAMAGE, GENERIC_ATTACK_SPEED,
+#    GENERIC_MOVEMENT_SPEED, GENERIC_ARMOR, GENERIC_ARMOR_TOUGHNESS,
+#    GENERIC_KNOCKBACK_RESISTANCE, GENERIC_LUCK, GENERIC_SAFE_FALL_DISTANCE,
+#    GENERIC_SCALE, GENERIC_STEP_HEIGHT, GENERIC_JUMP_STRENGTH,
+#    PLAYER_BLOCK_BREAK_SPEED, PLAYER_ENTITY_INTERACTION_RANGE,
+#    PLAYER_BLOCK_INTERACTION_RANGE, GENERIC_OXYGEN_BONUS ...
+#
+#  operation :
+#    ADD_NUMBER      -> ajoute la valeur brute
+#    ADD_SCALAR      -> +X% de la base (0.1 = +10%)
+#    MULTIPLY_SCALAR_1 -> multiplie le total (0.1 = +10%)
+#
+#  montant-par-niveau : bonus applique par niveau de skill
+#  niveau-max         : niveau maximum du skill
+#  cout               : points de skill necessaires par niveau
+#  slot               : position dans le menu (0 a 26)
+# ============================================================
+
+skills:
+  force:
+    nom: "&cForce"
+    description:
+      - "&7Augmente vos degats d'attaque."
+      - "&7+0.5 degat par niveau."
+    icone: IRON_SWORD
+    slot: 10
+    attribut: GENERIC_ATTACK_DAMAGE
+    operation: ADD_NUMBER
+    montant-par-niveau: 0.5
+    niveau-max: 20
+    cout: 1
+
+  vitalite:
+    nom: "&4Vitalite"
+    description:
+      - "&7Augmente vos coeurs maximum."
+      - "&7+1 coeur par niveau."
+    icone: GOLDEN_APPLE
+    slot: 11
+    attribut: GENERIC_MAX_HEALTH
+    operation: ADD_NUMBER
+    montant-par-niveau: 2.0
+    niveau-max: 20
+    cout: 1
+
+  agilite:
+    nom: "&bAgilite"
+    description:
+      - "&7Augmente votre vitesse de deplacement."
+      - "&7+2% de vitesse par niveau."
+    icone: FEATHER
+    slot: 12
+    attribut: GENERIC_MOVEMENT_SPEED
+    operation: MULTIPLY_SCALAR_1
+    montant-par-niveau: 0.02
+    niveau-max: 15
+    cout: 1
+
+  resistance:
+    nom: "&7Resistance"
+    description:
+      - "&7Augmente votre armure naturelle."
+      - "&7+0.5 point d'armure par niveau."
+    icone: IRON_CHESTPLATE
+    slot: 13
+    attribut: GENERIC_ARMOR
+    operation: ADD_NUMBER
+    montant-par-niveau: 0.5
+    niveau-max: 20
+    cout: 1
+
+  rapidite:
+    nom: "&eRapidite"
+    description:
+      - "&7Augmente votre vitesse d'attaque."
+      - "&7+3% de vitesse d'attaque par niveau."
+    icone: CLOCK
+    slot: 14
+    attribut: GENERIC_ATTACK_SPEED
+    operation: MULTIPLY_SCALAR_1
+    montant-par-niveau: 0.03
+    niveau-max: 15
+    cout: 1
+
+  robustesse:
+    nom: "&8Robustesse"
+    description:
+      - "&7Reduit le recul subi en combat."
+      - "&7+5% de resistance au recul par niveau."
+    icone: ANVIL
+    slot: 15
+    attribut: GENERIC_KNOCKBACK_RESISTANCE
+    operation: ADD_NUMBER
+    montant-par-niveau: 0.05
+    niveau-max: 10
+    cout: 2
+
+  chance:
+    nom: "&aChance"
+    description:
+      - "&7Ameliore votre chance (butin, peche...)."
+      - "&7+0.5 point de chance par niveau."
+    icone: RABBIT_FOOT
+    slot: 16
+    attribut: GENERIC_LUCK
+    operation: ADD_NUMBER
+    montant-par-niveau: 0.5
+    niveau-max: 10
+    cout: 2

@@ -1,0 +1,28 @@
+name: ImaginariumSkills
+version: '${project.version}'
+main: fr.imaginarium.skills.ImaginariumSkills
+api-version: '1.21'
+author: Imaginarium
+description: Systeme de skills, niveaux, recompenses et modification d'attributs.
+
+commands:
+  skills:
+    description: Ouvre le menu des skills et gere le systeme de niveaux.
+    usage: /skills [info|help|admin ...]
+    aliases: [skill, competences]
+  itemattr:
+    description: Modifie les caracteristiques (attributs) de l'objet en main.
+    usage: /itemattr <add|remove|list|clear|name|unbreakable>
+    aliases: [itemattribut, ia]
+    permission: imaskills.itemattr
+
+permissions:
+  imaskills.use:
+    description: Acces au menu des skills.
+    default: true
+  imaskills.admin:
+    description: Acces aux commandes d'administration (/skills admin).
+    default: op
+  imaskills.itemattr:
+    description: Acces a /itemattr pour modifier les objets.
+    default: op

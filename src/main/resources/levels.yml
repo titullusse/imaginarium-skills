@@ -1,0 +1,60 @@
+# ============================================================
+#  ImaginariumSkills - Recompenses de niveaux
+#
+#  "defaut" est applique a CHAQUE montee de niveau.
+#  Une section numerotee (5, 10, 25...) s'ajoute au defaut
+#  quand le joueur atteint ce niveau precis.
+#
+#  Options disponibles pour chaque niveau :
+#    points-de-skill : points de skill donnes
+#    commandes       : liste de commandes executees par la console
+#                      (%player% = pseudo, %level% = niveau atteint)
+#    message         : message prive envoye au joueur
+#    broadcast       : message diffuse a tout le serveur
+#    son             : son joue au joueur (ex: ENTITY_PLAYER_LEVELUP)
+# ============================================================
+
+defaut:
+  points-de-skill: 1
+  message: "&aNiveau &e%level%&a atteint ! &7(+1 point de skill)"
+  son: ENTITY_PLAYER_LEVELUP
+
+niveaux:
+  5:
+    commandes:
+      - "give %player% iron_ingot 16"
+    message: "&6Recompense de niveau 5 : &f16 lingots de fer !"
+
+  10:
+    points-de-skill: 2
+    commandes:
+      - "give %player% diamond 5"
+    message: "&6Recompense de niveau 10 : &b5 diamants &6et un point de skill bonus !"
+    broadcast: "&e%player% &7vient d'atteindre le niveau &e10 &7!"
+
+  25:
+    points-de-skill: 3
+    commandes:
+      - "give %player% netherite_ingot 1"
+      - "give %player% golden_apple 8"
+    message: "&6Recompense de niveau 25 : &51 lingot de netherite &6et &e8 pommes d'or !"
+    broadcast: "&e%player% &7vient d'atteindre le niveau &e25 &7!"
+    son: UI_TOAST_CHALLENGE_COMPLETE
+
+  50:
+    points-de-skill: 5
+    commandes:
+      - "give %player% netherite_ingot 3"
+      - "give %player% enchanted_golden_apple 2"
+    message: "&6Recompense de niveau 50 : la moitie du chemin !"
+    broadcast: "&d%player% &7vient d'atteindre le niveau &d50 &7!"
+    son: UI_TOAST_CHALLENGE_COMPLETE
+
+  100:
+    points-de-skill: 10
+    commandes:
+      - "give %player% netherite_block 1"
+      - "give %player% elytra 1"
+    message: "&6&lNiveau maximum atteint ! Felicitations !"
+    broadcast: "&5&l%player% a atteint le niveau maximum (100) !"
+    son: UI_TOAST_CHALLENGE_COMPLETE
