@@ -49,6 +49,14 @@ public class PlayerDataManager {
                     profile.setSkillLevel(id, skillsSection.getInt(id));
                 }
             }
+        } else {
+            // Nouveau joueur : on lui attribue les points de skill de depart
+            // et on sauvegarde tout de suite pour ne pas les redonner a la prochaine connexion.
+            int startingPoints = plugin.getConfig().getInt("points-de-depart", 0);
+            if (startingPoints > 0) {
+                profile.setSkillPoints(startingPoints);
+            }
+            save(profile);
         }
         return profile;
     }

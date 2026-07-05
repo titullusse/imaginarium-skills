@@ -69,7 +69,9 @@ Placez-le dans le dossier `plugins/` de votre serveur Spigot 1.21.1.
 ## Configuration
 
 - `config.yml` — courbe d'XP (base/par-niveau/quadratique), niveau maximum,
-  sources d'XP (kills et blocs), multiplicateur global, sauvegarde auto.
+  sources d'XP (kills et blocs), multiplicateur global, sauvegarde auto,
+  et `points-de-depart` (points de skill offerts à chaque nouveau joueur
+  lors de sa première connexion).
 - `skills.yml` — définition des skills : attribut modifié, opération, bonus
   par niveau, niveau max, coût, icône et position dans le menu. Vous pouvez
   en ajouter/supprimer librement.

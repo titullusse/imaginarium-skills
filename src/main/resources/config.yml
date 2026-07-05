@@ -63,6 +63,10 @@ xp-sources:
 # Multiplicateur global d'XP (1.0 = normal, 2.0 = double XP...).
 multiplicateur-xp: 1.0
 
+# Points de skill offerts a chaque nouveau joueur lors de sa premiere connexion.
+# 0 = aucun point de depart. Ne s'applique qu'aux joueurs jamais vus auparavant.
+points-de-depart: 0
+
 # Intervalle de sauvegarde automatique des donnees joueurs (en minutes).
 sauvegarde-auto-minutes: 5
 
