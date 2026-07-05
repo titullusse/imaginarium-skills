@@ -86,7 +86,8 @@ public final class SkillsMenu {
                 int skillLevel = profile.getSkillLevel(skill.id());
                 if (skillLevel > 0) {
                     lore.add(Msg.color("&8- " + skill.displayName() + " &7: niveau &e"
-                            + skillLevel + "&7/&e" + skill.maxLevel()));
+                            + skillLevel + "&7/&e" + skill.maxLevel()
+                            + " &7(&a" + formatBonus(skill, skillLevel) + "&7)"));
                     hasAny = true;
                 }
             }
@@ -115,6 +116,16 @@ public final class SkillsMenu {
             lore.add(Msg.color("&cPas assez de points de skill."));
         }
         return item(skill.icon(), skill.displayName(), lore);
+    }
+
+    /** Valeur brute totale du modificateur d'attribut apporte par le skill a ce niveau. */
+    private static String formatBonus(Skill skill, int level) {
+        double total = skill.amountPerLevel() * level;
+        String sign = total >= 0 ? "+" : "";
+        String number = total == Math.rint(total)
+                ? String.valueOf((long) total)
+                : String.valueOf(Math.round(total * 100.0) / 100.0);
+        return sign + number;
     }
 
     private static String progressBar(long current, long required) {
