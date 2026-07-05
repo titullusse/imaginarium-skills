@@ -55,11 +55,24 @@ Placez-le dans le dossier `plugins/` de votre serveur Spigot 1.21.1.
 ### Exemples `/itemattr`
 
 ```
-/itemattr add generic_attack_damage 12 add_number mainhand
+/itemattr add generic_attack_damage 12 add_number hand
 /itemattr add generic_movement_speed 0.1 multiply_scalar_1 legs
 /itemattr add generic_max_health 4 add_number chest
 /itemattr name &6Épée &clégendaire
 ```
+
+**Emplacements pris en charge** (dernier argument de `add`) :
+
+| Nom | Emplacement |
+|---|---|
+| `any` | N'importe quel emplacement |
+| `hand` | Main droite (main principale) uniquement |
+| `off_hand` | Main gauche (main secondaire) uniquement |
+| `head` | Casque |
+| `chest` | Plastron |
+| `legs` | Jambières |
+| `feet` | Bottes |
+| `armor` | Les 4 pièces d'armure |
 
 > ⚠️ Comportement vanilla : dès qu'un objet reçoit un modificateur d'attribut,
 > ses statistiques de base disparaissent. Pour une épée en diamant, pensez à

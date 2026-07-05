@@ -26,7 +26,7 @@ import java.util.UUID;
 public class ItemAttrCommand implements TabExecutor {
 
     private static final List<String> SLOT_GROUPS =
-            List.of("any", "hand", "mainhand", "offhand", "armor", "head", "chest", "legs", "feet", "body");
+            List.of("any", "hand", "off_hand", "head", "chest", "legs", "feet", "armor");
 
     private final JavaPlugin plugin;
 
@@ -72,7 +72,7 @@ public class ItemAttrCommand implements TabExecutor {
         Msg.send(player, "&e--- Aide /itemattr (objet en main) ---");
         Msg.send(player, "&b/itemattr add <attribut> <montant> [operation] [slot]");
         Msg.send(player, "&7  operations : add_number, add_scalar, multiply_scalar_1");
-        Msg.send(player, "&7  slots : any, hand, mainhand, offhand, armor, head, chest, legs, feet");
+        Msg.send(player, "&7  emplacements : any, hand, off_hand, head, chest, legs, feet, armor");
         Msg.send(player, "&b/itemattr remove <attribut> &7- Retire un attribut.");
         Msg.send(player, "&b/itemattr list &7- Liste les attributs de l'objet.");
         Msg.send(player, "&b/itemattr clear &7- Retire tous les attributs.");
@@ -111,7 +111,7 @@ public class ItemAttrCommand implements TabExecutor {
         }
         EquipmentSlotGroup slotGroup = EquipmentSlotGroup.ANY;
         if (args.length >= 5) {
-            slotGroup = EquipmentSlotGroup.getByName(args[4].toLowerCase(Locale.ROOT));
+            slotGroup = parseSlotGroup(args[4]);
             if (slotGroup == null) {
                 Msg.send(player, "&cSlot invalide : " + args[4] + " &7(" + String.join(", ", SLOT_GROUPS) + ")");
                 return;
@@ -199,6 +199,33 @@ public class ItemAttrCommand implements TabExecutor {
                 return null;
             }
         }
+    }
+
+    /**
+     * Resout un emplacement a partir de son nom (insensible a la casse et aux underscores).
+     * Emplacements pris en charge :
+     *   ANY      - n'importe quel emplacement
+     *   HAND     - main droite (main principale)
+     *   OFF_HAND - main gauche (main secondaire)
+     *   HEAD     - casque
+     *   CHEST    - plastron
+     *   LEGS     - jambieres
+     *   FEET     - bottes
+     *   ARMOR    - les 4 pieces d'armure
+     *   BODY     - emplacement corps (loups, chevaux...)
+     */
+    private EquipmentSlotGroup parseSlotGroup(String raw) {
+        return switch (raw.toUpperCase(Locale.ROOT)) {
+            case "ANY" -> EquipmentSlotGroup.ANY;
+            case "HAND", "MAINHAND", "MAIN_HAND" -> EquipmentSlotGroup.MAINHAND;
+            case "OFF_HAND", "OFFHAND", "OFF" -> EquipmentSlotGroup.OFFHAND;
+            case "HEAD", "HELMET", "CASQUE" -> EquipmentSlotGroup.HEAD;
+            case "CHEST", "CHESTPLATE", "PLASTRON" -> EquipmentSlotGroup.CHEST;
+            case "LEGS", "LEGGINGS", "JAMBIERES" -> EquipmentSlotGroup.LEGS;
+            case "FEET", "BOOTS", "BOTTES" -> EquipmentSlotGroup.FEET;
+            case "ARMOR", "ARMOUR", "ARMURE" -> EquipmentSlotGroup.ARMOR;
+            default -> null;
+        };
     }
 
     @Override
